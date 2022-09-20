@@ -2,11 +2,19 @@
 {% load static %}
 
 {% block content %}
-{% load crispy_forms_tags %}
-<div class="col-md-offset-3 col-md-5">
+<div class="col-md-offset-4 col-md-6">
     <form method="POST" class="form-group">
 	{% csrf_token %}
-    {{ form|crispy }}
+    
+    {% for field in form %}
+        <div>
+            <p>{{ field.label }}: <br> {{field}} </p>
+
+            {% for error in field.errors %}
+                <small style="color: red">{{ error }}</small>
+            {% endfor %}
+        </div>
+    {% endfor %}
 	<button type="submit" class="btn btn-success">SignUp</button>
     </form>
 </div>
