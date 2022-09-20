@@ -5,19 +5,17 @@ from portal.models import MyFileUpload
 from django.contrib import messages
 from django.shortcuts import redirect
 import datetime
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib import auth
  
 # Create your views here.
 
-def home(request):
+def profile(request):
     myform = MyFileForm
     context = {'myform':myform}
     return render(request,'upload.html',context)
 
 def upload(request):
-    
-    data = MyFileUpload.objects.all()
-    
+            
     if request.method =="POST":
         myform = MyFileForm(request.POST,request.FILES)
         if myform.is_valid():
@@ -34,7 +32,11 @@ def upload(request):
             else:
                 MyFileUpload.objects.create(username=MyUserName,file_name=MyFileName,file_type=MyFileType,file=MyFile).save()
                 messages.success(request,"file uploaded successfully")
-        return redirect('home')
+        return redirect('profile')
+    
+def home(request):
+    return render(request,'home.html')
+    
     
 def signup(request):
     if request.method =="POST":
@@ -47,6 +49,19 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request,"signup.html",{'form':form})    
+
+def login(request):
+    if request.method == 'POST':
+        user = auth.authenticate(username=request.POST['username'],password = request.POST['password'])
+        if user is not None:
+            auth.login(request,user)
+            return redirect('home')
+        else:
+            return render (request,'login.html', {'error':'Username or password is incorrect!'})
+    else:
+        return render(request,'login.html')
+    
+
     
     
     
