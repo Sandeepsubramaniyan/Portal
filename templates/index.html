@@ -2,5 +2,44 @@
 
 {% block content %}
 
+    <div class="jumbotron text-center">        
+
+        <header>
+            <h1><a href="/home">PORTAL</a></h1>
+        </header>
+    </div>
+
+    <div class="col-md-7">
+        {% if mydata %}
+        <h3 class="page-header text-primary text-center">View File</h3>
+        <table class="table table-bordered">   
+                   
+            <thead>
+                <tr>
+                    <th style="text-align:center">S.No</th>
+                    <th>Username</th>
+                    <th>File Name</th>
+                    <th>File</th>
+                    <th>File Type</th>
+                    <th style="width:150%">Date Upload</th>                
+                                    
+                </tr>                    
+            </thead>
+            {% for data in mydata %}
+                <tbody>
+                    <tr>
+                        <td style="text-align:center">{{forloop.counter}}</td>
+                        <td>{{data.username}}</td>
+                        <td>{{data.file_name}}</td>
+                        <td><a href="{{data.file.url}}">{{data.file}}</a></td>
+                        <td>{{data.file_type}}</td>
+                        <td>{{data.uploaded_at}}</td>
+                        
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
 
 {% endblock %}
