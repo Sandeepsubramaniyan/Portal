@@ -10,4 +10,4 @@ class MyFileUpload(models.Model):
     file = models.FileField(upload_to='documents')    
             
     def __str__(self):
-        return self.username
+        return self.file_name

@@ -7,7 +7,10 @@
     <h1> PORTAL </h1>
 </div>
 
-<h2>Login!</h2>
+
+
+  <div align="center" />
+  <h2>Login!</h2>
 
   <form method = "POST" action="{% url 'login' %}">
       {% csrf_token %}
@@ -19,9 +22,10 @@
       <br/>
       <input type="password" name="password" />
       <br/>
+      <br/>
       <input class ="btn btn-primary" type="submit" value= "Login" />
       <br/>
-      <br/>
+  
       {% if error %}
       {{ error }}
 
@@ -29,5 +33,8 @@
       <br/>
       {% endif %}
   </form>
+  <a href="/signup" text="not registered">  SignUp</a>
+  </div>
+  
 
 {% endblock %}

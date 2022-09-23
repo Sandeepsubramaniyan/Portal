@@ -33,7 +33,22 @@ def upload(request):
     return render(request,'upload.html',context)  
     
 def home(request):
-    return render(request,'home.html')
+    
+    posts = MyFileUpload.objects.all().count()
+    pdf_file=MyFileUpload.objects.filter(file_type__contains='pdf').count()
+    excel_file=MyFileUpload.objects.filter(file_type__contains='excel').count()
+    doc_file=MyFileUpload.objects.filter(file_type__contains='doc').count()
+    context = {
+        'posts':posts,
+        'pdf_file':pdf_file,
+        'excel_file':excel_file,
+        'doc_file':doc_file,
+        
+        
+        
+    }
+
+    return render(request,'home.html',context)
 
 def index(request):
     mydata=MyFileUpload.objects.all()    
