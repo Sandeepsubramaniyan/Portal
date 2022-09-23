@@ -2,7 +2,13 @@
 {% load static %}
 
 {% block content %}
+
+<div class="jumbotron text-center">
+    <h1> PORTAL </h1>
+</div>
 <div class="col-md-offset-4 col-md-6">
+   
+
     <form method="POST" class="form-group">
 	{% csrf_token %}
     
@@ -17,5 +23,7 @@
     {% endfor %}
 	<button type="submit" class="btn btn-success">SignUp</button>
     </form>
+
 </div>
+
 {% endblock content %}
