@@ -4,20 +4,18 @@ from portal.forms import MyFileForm , SignUpForm
 from portal.models import MyFileUpload
 from django.contrib import messages
 from django.shortcuts import redirect
-import datetime
 from django.contrib import auth
  
 # Create your views here.
 
-def profile(request):
+def upload(request):
+    
     myform = MyFileForm
     context = {'myform':myform}
-    return render(request,'upload.html',context)
-
-def upload(request):
             
     if request.method =="POST":
         myform = MyFileForm(request.POST,request.FILES)
+
         if myform.is_valid():
             
             MyUserName = request.POST.get('username')
@@ -31,11 +29,22 @@ def upload(request):
                 messages.error(request,'The file %s is already exists...!!!'% MyFile)
             else:
                 MyFileUpload.objects.create(username=MyUserName,file_name=MyFileName,file_type=MyFileType,file=MyFile).save()
-                messages.success(request,"file uploaded successfully")
-        return redirect('profile')
+                messages.success(request,"file uploaded successfully") 
+    return render(request,'upload.html',context)  
     
 def home(request):
     return render(request,'home.html')
+
+def index(request):
+    mydata=MyFileUpload.objects.all()    
+    myform=MyFileForm()
+    if mydata!='':
+        context={'form':myform,'mydata':mydata}
+        return render(request,'index.html',context)
+    else:
+        context={'form':myform}
+        return render(request,"index.html",context)
+    
     
     
 def signup(request):
